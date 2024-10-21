@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO } from './user.dto';
 
@@ -15,5 +15,15 @@ export class UserController {
     @HttpCode(201)
     async createUser(@Body() userData: UserDTO): Promise<UserDTO> {
         return this.userService.createUser(userData);
+    }
+
+    @Put('/:id')
+    async updateUser(@Param('id') id: number, @Body() user: Partial<UserDTO>): Promise<UserDTO> {
+        return this.userService.updateUser(id, user);
+    }
+
+    @Delete('/:id')
+    async deleteUser(@Param('id') id: number): Promise<void> {
+        return this.userService.deleteUser(id);
     }
 }
